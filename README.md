@@ -7,6 +7,20 @@ The procedures for setting up the AWS instance and connecting to it are outlined
 
 First we will need to install/configure Python36 and Pip (the recommended way to install Apache Airflow)
 
-As _root_ user (or using _sudo_) run the following command _yum install python36_ (which should automatically install _pip3_)
+As _root_ user (or using _sudo_) run the following commands:
 
+```
+yum install python36
+yum install python36-devel
+```
+
+Python36 should automatically install _pip3_ which will be used to install Airflow
+
+
+As self, we will install Apache Airflow as follows:
+
+```
+export AIRFLOW_HOME=~/airflow
+pip3 install --user apache-airflow
+```
 
