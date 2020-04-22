@@ -24,5 +24,18 @@ export AIRFLOW_HOME=~/airflow
 pip3 install --user apache-airflow
 ```
 
+## Troubleshooting
+
+As I started up the Web server I initially got the error _Error: No module named airflow.www.gunicorn_config_
+
+Problem was easily resolved by running the below commands:
+
+```
+pip3 uninstall gunicorn
+pip3 install --user gunicorn
+```
+
+Indeed, a good number of times these problems can be linked directly to a Python library installed incorrectly the first time around.
+
  By default, Airflow uses the SQLite database so we will run _airflow initdb_ to reconfigure the application to use MariaDB.
 
