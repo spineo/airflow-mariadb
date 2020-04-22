@@ -24,6 +24,29 @@ export AIRFLOW_HOME=~/airflow
 pip3 install --user apache-airflow
 ```
 
+## Run the Web Server
+
+Before starting, lets open up our target port _8080_ in AWS by navigating to the AWS Console, selecting our current instance checkbox, and then in the top menu navigating to _Actions -> Networking -> Change Security Groups_ and, as shown in the Screenshot below, selecting our target security group.
+
+![Assign Security Group](images/assign_security_group.png)
+
+Next, navigate to ~/airflow and edit the _airflow.cfg_ file by modifying the below properties to use the public DNS (here we are duplicating and then commenting out the default properties)
+
+```
+[webserver]
+# The base url of your website as airflow cannot guess what domain or
+# cname you are using. This is used in automated emails that
+# airflow sends to point links to the right web server
+#base_url = http://localhost:8080
+base_url = http://ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com:8080
+
+...
+
+# The ip specified when starting the web server
+#web_server_host = 0.0.0.0
+web_server_host = ec2-3-81-200-120.compute-1.amazonaws.com
+```
+
 ## Troubleshooting
 
 As I started up the Web server I initially got the error _Error: No module named airflow.www.gunicorn_config_
