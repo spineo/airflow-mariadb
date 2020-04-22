@@ -17,10 +17,12 @@ yum install python36-devel
 Python36 should automatically install _pip3_ which will be used to install Airflow
 
 
-As self, we will install Apache Airflow as follows:
+As self, we will install Apache Airflow as follows (we can subsequently set AIRFLOW_HOME in the ~/.bashrc):
 
 ```
 export AIRFLOW_HOME=~/airflow
 pip3 install --user apache-airflow
 ```
+
+ By default, Airflow uses the SQLite database so we will run _airflow initdb_ to reconfigure the application to use MariaDB.
 
