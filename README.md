@@ -44,8 +44,12 @@ base_url = http://ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com:8080
 
 # The ip specified when starting the web server
 #web_server_host = 0.0.0.0
-web_server_host = ec2-3-81-200-120.compute-1.amazonaws.com
+web_server_host = ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com
 ```
+
+Start up the Web Server by running _airflow webserver -p 8080_ and navigating to the _base_url_ shown above. You should see the below UI render:
+
+![Airflow Webserver](images/airflow_webserver.png)
 
 ## Troubleshooting
 
