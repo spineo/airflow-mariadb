@@ -47,9 +47,9 @@ base_url = http://ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com:8080
 web_server_host = ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com
 ```
 
-Start up the Web Server by running _airflow webserver -p 8080_ and navigating to the _base_url_ shown above. You should see the below UI render:
+Start up the Web Server by running _airflow webserver -p 8080_ and then run _airflow scheduler_ to start the scheduler. Navigating to the _base_url_ shown above. You should see the below UI render:
 
-![Airflow Webserver](images/airflow_webserver.png)
+![Airflow Webserver DAG](images/airflow_webserver_dag.png)
 
 ## Troubleshooting
 
