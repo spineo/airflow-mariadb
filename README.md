@@ -72,12 +72,6 @@ grant all on airflow.* TO 'airflow'@'localhost' IDENTIFIED BY 'airflow';
 Edit the _~/airflow/airflow.cfg_ File to include the Connection String (instead of the default sqlite one):
 
 ```
-# The executor class that airflow should use. Choices include
-# SequentialExecutor, LocalExecutor, CeleryExecutor, DaskExecutor, KubernetesExecutor
-executor = CeleryExecutor
-
-...
-
 # The SqlAlchemy connection string to the metadata database.
 # SqlAlchemy supports many different database engine, more information
 # their website
@@ -87,6 +81,12 @@ sql_alchemy_conn = mysql://airflow:airflow@localhost:3306/airflow
 The additional fields below should be set as shown (there will be a few others we will set when we get ready to start the Webserver and Scheduler):
 
 ```
+# The executor class that airflow should use. Choices include
+# SequentialExecutor, LocalExecutor, CeleryExecutor, DaskExecutor, KubernetesExecutor
+executor = CeleryExecutor
+
+...
+
 # The Celery broker URL. Celery supports RabbitMQ, Redis and experimentally
 # a sqlalchemy database. Refer to the Celery documentation for more
 # information.
