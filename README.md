@@ -7,6 +7,8 @@ This example reviews installing Apache Airflow and re-configuring it to use Mari
 
 The procedures for setting up the AWS instance and connecting to it are outlined [here](https://github.com/spineo/local-yum-mariadb/blob/master/README.md). For this example, we will install Airflow in the same Linux RHEL 8 AWS instance that is running the master MariaDB node.
 
+Since we will have multiple applications running on this instance we should ensure that it is at least a _t2.large_ (if it is already running as a smaller size we can easily resize it by stopping the instance, going to _Actions -> Instance Settings -> Change Instance Type_, selecting _t2.large_, and starting the instance back up)
+
 First we will need to install/configure Python36 and Pip (the recommended way to install Apache Airflow)
 
 ## Install Python36 and Pip3
