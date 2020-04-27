@@ -40,7 +40,15 @@ and restart MariaDB (_service mariadb restart_)
 
 ## Install Airflow
 
-As self, we will install Apache Airflow as follows (we can subsequently set AIRFLOW_HOME in the ~/.bashrc):
+As self, we will install Apache Airflow as follows (we can subsequently set AIRFLOW_HOME in the ~/.bashrc). You can optionally create the _airflow_ user (i.e., _useradd airflow_) and change the filesystem ownership to _airflow_:
+
+```
+export AIRFLOW_HOME=/somedir/airflow
+mkdir -p $AIRFLOW_HOME
+chown airflow. $AIRFLOW_HOME
+```
+
+For this installation, I will run the commands as myself (but set up the _airflow_ user in the database):
 
 ```
 export AIRFLOW_HOME=~/airflow
