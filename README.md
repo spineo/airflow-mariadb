@@ -7,6 +7,8 @@ The procedures for setting up the AWS instance and connecting to it are outlined
 
 First we will need to install/configure Python36 and Pip (the recommended way to install Apache Airflow)
 
+## Install Python36 and Pip3
+
 As _root_ user (or using _sudo_) run the following commands:
 
 ```
@@ -16,12 +18,31 @@ yum install python36-devel
 
 Python36 should automatically install _pip3_ which will be used to install Airflow
 
+## Install Packages/Configure MariaDB
+
+As _root_ user install the additional MariaDB packages that will be used by _apache-airflow_:
+
+```
+yum install --disablerepo=rhel-8-appstream-rhui-rpms MariaDB-devel MariaDB-shared
+```
+
+and modify the configuration (_/etc/my.cnf.d/server.cnf_) to include the additional property shown:
+
+```
+[mysqld]
+...
+explicit_defaults_for_timestamp = 1
+```
+
+and restart MariaDB (_service mariadb restart_)
+
+## Install Airflow
 
 As self, we will install Apache Airflow as follows (we can subsequently set AIRFLOW_HOME in the ~/.bashrc):
 
 ```
 export AIRFLOW_HOME=~/airflow
-pip3 install --user apache-airflow
+pip3 install --user "apache-airflow[mysql,celery]"
 ```
 
 ## Run the Web Server
