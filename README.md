@@ -36,7 +36,9 @@ and modify the configuration (_/etc/my.cnf.d/server.cnf_) to include the additio
 explicit_defaults_for_timestamp = 1
 ```
 
-and restart MariaDB (_service mariadb restart_)
+and restart MariaDB (_service mariadb restart_).
+
+Without the above setting you will likely get an error when attempting to initialize the database.
 
 ## Install Airflow
 
@@ -68,11 +70,36 @@ grant all on airflow.* TO 'airflow'@'localhost' IDENTIFIED BY 'airflow';
 ## Reconfigure Airflow to use MySQL and Initialize
 
 Edit the _~/airflow/airflow.cfg_ File to include the Connection String (instead of the default sqlite one):
+
 ```
+# The executor class that airflow should use. Choices include
+# SequentialExecutor, LocalExecutor, CeleryExecutor, DaskExecutor, KubernetesExecutor
+executor = CeleryExecutor
+
+...
+
 # The SqlAlchemy connection string to the metadata database.
 # SqlAlchemy supports many different database engine, more information
 # their website
 sql_alchemy_conn = mysql://airflow:airflow@localhost:3306/airflow
+```
+
+The additional fields below should be set as shown (there will be a few others we will set when we get ready to start the Webserver and Scheduler):
+
+```
+# The Celery broker URL. Celery supports RabbitMQ, Redis and experimentally
+# a sqlalchemy database. Refer to the Celery documentation for more
+# information.
+# http://docs.celeryproject.org/en/latest/userguide/configuration.html#broker-settings
+broker_url = sqla+mysql://airflow:airflow@localhost:3306/airflow
+
+# The Celery result_backend. When a job finishes, it needs to update the
+# metadata of the job. Therefore it will post a message on a message bus,
+# or insert it into a database (depending of the backend)
+# This status is used by the scheduler to update the state of the task
+# The use of a database is highly recommended
+# http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-result-backend-settings
+result_backend = db+mysql://airflow:airflow@localhost:3306/airflow
 ```
 
 and the _airflow initdb_ command
@@ -205,7 +232,7 @@ base_url = http://ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com:8080
 web_server_host = ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com
 ```
 
-Start up the Web Server by running _airflow webserver -p 8080_ and then run _airflow scheduler_ to start the scheduler. Navigating to the _base_url_ shown above. You should see the below UI render:
+Start up the Web Server by running _airflow webserver_ (it defaults to port 8080 but can be changed in the configuration or by using the option _-p <port>_ at startup) and then run _airflow scheduler_ to start the scheduler. Navigating to the _base_url_ shown above. You should see the below UI render:
 
 ![Airflow Webserver DAG](images/airflow_webserver_dag.png)
 
