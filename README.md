@@ -217,7 +217,7 @@ Before starting, lets open up our target port _8080_ in AWS by navigating to the
 
 ![Assign Security Group](images/assign_security_group.png)
 
-Next, navigate to ~/airflow and edit the _airflow.cfg_ file by modifying the below properties to use the public DNS (here we are duplicating and then commenting out the default properties)
+Next, navigate to ~/airflow and edit the _airflow.cfg_ file by modifying the below properties to use the public DNS (here we are duplicating and then commenting out the default properties). For the _base_url_ and _web_server_host_ I leave it set to "localhost" and open up an ssh tunnel to browse locally (i.e., _ssh -i /path/key.pem -L 8080:localhost:8080 myuser@ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com_)
 
 ```
 [webserver]
@@ -234,7 +234,16 @@ base_url = http://ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com:8080
 web_server_host = ec2-xxx-xxx-xxx-xxx.compute-1.amazonaws.com
 ```
 
-Start up the Web Server by running _airflow webserver_ (it defaults to port 8080 but can be changed in the configuration or by using the option _-p <port>_ at startup) and then run _airflow scheduler_ to start the scheduler. Navigating to the _base_url_ shown above. You should see the below UI render:
+Run the following commands:
+```
+airflow webserver &
+airflow scheduler &
+airflow worker &
+```
+
+The _webserver_ defaults to port 8080 but can be changed in the configuration or by using the option _-p <port>_ at startup. The _scheduler_ queues the tasks defined in the DAG and the _worker_ instantiates a Celery executor to run the task(s).
+ 
+ Navigating to the _base_url_ (or localhost:8080, if you set up a local tunnel on that port) will render the UI:
 
 ![Airflow Webserver DAG](images/airflow_webserver_dag.png)
 
