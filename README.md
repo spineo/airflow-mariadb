@@ -266,15 +266,15 @@ Then run the following:
 ```
 mkdir ~/airflow/dags
 cd ~/airflow/dags
-cp ~/.local/lib/python3.6/site-packages/airflow/example_dags/tutorial.py mytutorial.py
+cp ~/.local/lib/python3.6/site-packages/airflow/example_dags/tutorial.py my_tutorial.py
 ```
 
-We will then edit the _mytutorial.py_ DAG to ensure that the top-level configuration uses the new name and change the _schedule_interval_ to "None":
+We will then edit the _my_tutorial.py_ DAG to ensure that the top-level configuration uses the new name and change the _schedule_interval_ to "None":
 
 ```
 # [START instantiate_dag]
 dag = DAG(
-    'mytutorial',
+    'my_tutorial',
     default_args=default_args,
     description='A simple tutorial DAG',
     schedule_interval=None
