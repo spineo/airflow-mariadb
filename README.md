@@ -253,3 +253,6 @@ Indeed, a good number of times these problems can be linked directly to a Python
 
  By default, Airflow uses the SQLite database so we will run _airflow initdb_ to reconfigure the application to use MariaDB.
 
+## References
+
+https://airflow.apache.org/docs/stable/tutorial.html
