@@ -247,6 +247,42 @@ The _webserver_ defaults to port 8080 but can be changed in the configuration or
 
 ![Airflow Webserver DAG](images/airflow_webserver_dag.png)
 
+## Creating and Executing a DAG
+
+As shown in the screenshot, Airflow comes pre-installed with a list of example DAGs. I this example, we will simply clone the existing "tutorial" DAG into our own DAG location and make some minor modifications.
+
+Ensure that the _~/airflow/airflow.cfg_ property file includes the following setting:
+```
+[core]
+# The folder where your airflow pipelines live, most likely a
+# subfolder in a code repository. This path must be absolute.
+dags_folder = /home/<myuser>/airflow/dags
+
+...
+```
+
+Then run the following:
+
+```
+mkdir ~/airflow/dags
+cd ~/airflow/dags
+cp ~/.local/lib/python3.6/site-packages/airflow/example_dags/tutorial.py mytutorial.py
+```
+
+We will then edit the _mytutorial.py_ DAG to ensure that the top-level configuration uses the new name and change the _schedule_interval_ to "None":
+
+```
+# [START instantiate_dag]
+dag = DAG(
+    'mytutorial',
+    default_args=default_args,
+    description='A simple tutorial DAG',
+    schedule_interval=None
+)
+# [END instantiate_dag]
+```
+
+
 ## Troubleshooting
 
 As I started up the Web server I initially got the error _Error: No module named airflow.www.gunicorn_config_
