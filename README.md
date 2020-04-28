@@ -211,7 +211,7 @@ MariaDB [airflow]> show tables;
 MariaDB [airflow]>
 ```
 
-## Run the Web Server
+## Run the Web Server, Scheduler, and Worker
 
 Before starting, lets open up our target port _8080_ in AWS by navigating to the AWS Console, selecting our current instance checkbox, and then in the top menu navigating to _Actions -> Networking -> Change Security Groups_ and, as shown in the Screenshot below, selecting our target security group.
 
@@ -247,7 +247,7 @@ The _webserver_ defaults to port 8080 but can be changed in the configuration or
 
 ![Airflow Webserver DAG](images/airflow_webserver_dag.png)
 
-## Creating and Executing a DAG
+## Creating a DAG
 
 As shown in the screenshot, Airflow comes pre-installed with a list of example DAGs. I this example, we will simply clone the existing "tutorial" DAG into our own DAG location and make some minor modifications.
 
@@ -282,6 +282,22 @@ dag = DAG(
 # [END instantiate_dag]
 ```
 
+## Executing Our DAG
+
+While we can execute/test the DAG command-line, for this exercise we will use the UI
+
+If you refresh the webserver (or restart, if required) you should now see towards the bottom the new DAG _my_tutorial_ which we dropped in our DAG repository. After you turn it _On_ (switch on the left) you can click on the DAG name and it will bring you to the _Tree View_ shown below:
+
+![Tutorial DAG](images/my_tutorial_dag.png)
+
+
+To run this DAG, you can simply click on _Trigger DAG_ (top right) and then _Trigger_ from the pop-up window. If successful, it will run through all tasks starting with _print_date_ and then, in parallel, _sleep_ and _templated_ (the _References_ section has an Airflow tutorial that describes the structure of this DAG) and show the output below. 
+
+![Success DAG](images/success_dag.png)
+
+If we click on any of the small green squares to the right (i.e., the one associated with _print_date_) a pop-up window will appear with, among other options, _View Log_. If we click on that button, the logs associated with the _print_date_ task execution will be displayed as shown below.
+
+![Print Date Log](images/view_log.png)
 
 ## Troubleshooting
 
